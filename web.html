@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>vue練習場</title>
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+        {{name}}
+        {{num}}
+        {{person.name}}
+        <input type="number" v-model="num">
+        <br/>
+        <img :src="person[0].image" :alt="person[0].name" width="200" />
+        <hr/>
+        <ul>
+            <li v-for="item in person">
+                {{item.name}} {{item.cash}}<button type="button" @click="numPlus(item)">增加</button>
+                <br/>
+                <image :src="item.image" width="100"></image>
+                <br/>
+                <i class="bi bi-gender-male" v-if="item.sex === 'male'"></i>
+                <i class="bi bi-gender-female" v-else></i>
+            </li>
+        </ul>
+
+
+
+    </div>
+    <script src="script/script.js"></script>
+    <script src="script/vue.js"></script>
+
+    </script>
+    </body>
+</html>

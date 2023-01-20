@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>vue-hw</title>
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="inner"  v-for="person in information">
+            <div class="in" id = 'picture' >
+                <image :src="person.picture.large"></image>
+            </div>
+            <div id = "name" class="in">
+                {{person.name.title}}.{{person.name.first}} {{person.name.last}}
+            </div>
+            <div id="old" class="in">
+                age : {{person.dob.age}}
+            </div>
+            <div id="email" class="in">
+                Email : {{person.email}}
+            </div>
+            <br>
+            <div id="phone" class="in">
+                phone : {{person.phone}}
+            </div>
+            <br>
+            <div id="cell" class="in">
+                cell : {{person.cell}}
+            </div>
+            <br>
+            <div id="city" class="in">
+                city : {{person.location.city}}
+            </div>
+            <br>
+            <div id="state" class="in">
+                state : {{person.location.state}}
+            </div>
+            <br>
+            <div id="country" class="in">
+                country : {{person.location.country}}
+            </div>
+            <br>
+            <div id="postcode" class="in">
+                postcode : {{person.location.postcode}}
+            </div>
+            <br>
+            <div id="address" class="in">
+                address : {{person.location.city}} {{person.location.state}} {{person.location.country}}{{person.location.postcode}}
+            </div>
+            <br>
+        </div>
+    </div>
+    <script src="script/vue-hw1.js"></script>
+</body>
