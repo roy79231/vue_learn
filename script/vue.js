@@ -6,6 +6,7 @@ const vm =Vue.createApp({
             message: 'Hello Vue!',
             name:'faker',
             num:7,
+            isActive:true,
             person:[
             {
                 name:"小明",
@@ -33,6 +34,9 @@ const vm =Vue.createApp({
         },
         numPlus(a){
             a.cash++;                
+        },
+        changeCash(a){
+            console.log(a);
         }
     }
 

@@ -5,12 +5,16 @@ const vm = Vue.createApp({
         }
     
     },
-    methods:{},
-    mounted:function(){
-        axios.get("https://randomuser.me/api/?results=9")
+    methods:{
+        getData(){
+            axios.get("https://randomuser.me/api/?results=9")
             .then((resource)=>{
                 this.information=resource.data.results
             })
+        }   
+    },
+    mounted:function(){
+        this.getData();
     }
 });
 vm.mount("#app");
