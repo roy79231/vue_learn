@@ -30,9 +30,8 @@
             <li  class="list-group-item" v-for="data in filterTodos" :key="data.id" >
               <div class="d-flex">
                 <div class="form-check">
-                    
                   <div>
-                    <input :id="data.id" type="checkbox" class="form-check-input" @click="data.status=!data.status" :checked="data.status">
+                    <input :id="data.id" type="checkbox" class="form-check-input" @click="stageChange(data)" :checked="data.status">
                     <label :for="data.id" :class="{completed:data.status}" @dblclick="editList(data)" >{{data.text}}</label>
                   </div>
                 </div>
@@ -58,8 +57,7 @@
               <a href="#" class="me-3" @click.prevent="visibility='all'">全部</a>
               <a href="#" class="me-3" @click.prevent="visibility='active'">未完成</a>
               <a href="#" class="me-3" @click.prevent="visibility='completed'">已完成</a>
-              <a href="#" class="me-3" @click.prevent="clean">清除所有任務</a>
-              <a href="#" @click.prevent="storage">儲存</a>
+              <a href="#" @click.prevent="clean">清除所有任務</a>
             </div>
           </div>
         </div>
@@ -69,8 +67,9 @@
       integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
       crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@next"></script>
+
     <script type="module">
-    import {createApp ,onMounted,ref,computed,reactive} from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.esm-browser.min.js'; 
+    import {createApp ,onMounted,ref,computed} from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.esm-browser.min.js'; 
       const app = createApp({
         setup() {
             const newTodo = ref('');
@@ -85,13 +84,15 @@
                     id:todoList.value.length+1,
                     status:false
                  })
+                storage();
                 newTodo.value=''
-            }
+            };
             //減少
             function delList(data){
                    const index=todoList.value.findIndex(obj=> obj.id===data.id);
-                   todoList.value.splice(index,1)
-            }
+                   todoList.value.splice(index,1);
+                   storage();
+            };
             //編輯
             const temp= ref({});
 
@@ -103,15 +104,36 @@
                    const index=todoList.value.findIndex(obj=> obj.id===temp.value.id);
                    todoList.value[index]=temp.value;
                    temp.value={};
+                   storage();
                }
             //清除
             function clean(){
                    if(confirm("是否刪除全部?")){
-                   todoList.value=[]}
+                   todoList.value=[]
+                    localStorage.removeItem("todoListHistory")                  
+                  }                   
                }
             //儲存
             function storage(){
-
+              let local = JSON.stringify(todoList.value);
+              localStorage.setItem('todoListHistory',local);
+            }
+            //讀取
+            function read(){
+              let getdata = JSON.parse(localStorage.getItem('todoListHistory'))
+              if(getdata == [] || getdata == undefined){
+                todoList.value=[];
+              }
+              else{
+                console.log(getdata);
+                todoList.value=getdata;
+              }
+            }
+            //勾選
+            function stageChange(data){
+              const index = todoList.value.findIndex(obj=> obj.id === data.id);
+              todoList.value[index].status = !todoList.value[index].status;
+              storage();
             }
             //顯示切換
              const visibility=ref('active');
@@ -127,7 +149,8 @@
                             return todoList.value;
                     }
                  })
-            //儲存
+            //剛開始讀資料
+            onMounted(()=>read());
             return{
                 newTodo,
                 todoList,
@@ -140,52 +163,12 @@
                 finish,
                 clean,
                 filterTodos,
-                storage
+                storage,
+                read,
+                stageChange,
             }
-        }
-        });
-    //     methods: {
-    //         addList(){
-    //             this.todoList.push({
-    //                 text:this.newTodo,
-    //                 id:this.todoList.length+1,
-    //                 status:false
-    //             })
-    //             this.newTodo=''
-    //         },
-    //         delList(text){
-    //             const index=this.todoList.findIndex(obj=> obj.id===text.id);
-    //             this.todoList.splice(index,1)
-    //         },
-    //         editList(text){
-    //             this.temp={ ...text}
-    //         },
-    //         finish(){
-    //             const index=this.todoList.findIndex(obj=> obj.id===this.temp.id);
-    //             this.todoList[index]=this.temp;
-    //             this.temp={};
-    //         },
-    //         clean(){
-    //             if(confirm("是否刪除全部?")){
-    //             this.todoList=[]}
-    //         },
-          
-    //     },
-    //     computed:{
-    //         filterTodos(){
-    //             switch(this.visibility){
-    //                 case'active':
-    //                     return this.todoList.filter(data=> data.status === false);
-    //                     break;
-    //                 case'completed':
-    //                     return this.todoList.filter(data => data.status === true);
-    //                     break;
-    //                 default: 
-    //                     return this.todoList;
-    //             }
-    //         }
-    //     },
-    //   });
+        },
+        })
       app.mount('#app');
     </script>
   </body>

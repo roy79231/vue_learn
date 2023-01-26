@@ -16,6 +16,7 @@
         {{name}}
         {{num}}
         {{person.name}}
+        {{word}}
         <input type="number" v-model="num">
         <br/>
         <img :src="person[0].image" :alt="person[0].name" width="200" />
@@ -34,6 +35,7 @@
         <button type="button"  class="btn btn-outline-primary" 
         :class="{active: isActive}" 
         @click="isActive= !isActive">home</button>
+        <button @click="words">測試</button>
 
     </div>
     <script src="script/script.js"></script>

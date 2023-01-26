@@ -7,6 +7,7 @@ const vm =Vue.createApp({
             name:'faker',
             num:7,
             isActive:true,
+            word:0,
             person:[
             {
                 name:"小明",
@@ -37,7 +38,15 @@ const vm =Vue.createApp({
         },
         changeCash(a){
             console.log(a);
-        }
+        },            
+        words(){
+            if( 10 === 5 || 10 === 5){
+                this.word = "yes"
+            }
+            else{
+                this.word = "no"
+            }
+        }   
     }
 
 });
