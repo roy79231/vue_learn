@@ -1,6 +1,7 @@
 <script setup>
 import{computed} from "@vue/reactivity";
 import{ref , reactive,watch} from "vue";
+import PracticeVue from "./components/practice.vue";
 
 const name = ref("roy");
 
@@ -9,6 +10,9 @@ const people= reactive({
   age : 12,
 
 });
+const callback=(res)=>{
+  console.log(res);
+}
 
 const data = computed({
   get:()=>{
@@ -18,6 +22,10 @@ const data = computed({
     people.age = val*2;
   }
 })
+const data2 = computed(()=>{
+  return `${people.name}`
+})
+
 console.log(data.value);
 data.value = 15;
 console.log(data.value);
@@ -27,6 +35,8 @@ console.log(data.value);
 
 <template>
   <div>
+    {{ data2 }}
+    <PracticeVue :names1="people.name" :ages1=10 @add-int="callback"/>
   </div>
 </template>
 

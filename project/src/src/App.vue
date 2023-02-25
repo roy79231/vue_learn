@@ -1,6 +1,11 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView,useRouter } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+const router = useRouter();
+
+setTimeout(()=>{
+  router.replace("/address")
+},3000)
 </script>
 
 <template>
@@ -13,6 +18,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/address">address</RouterLink>
       </nav>
     </div>
   </header>
